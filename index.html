@@ -19,7 +19,13 @@
                 <li><a href="#courses">Courses</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#" class="btn btn-primary">Get Started</a></li>
+                <li>
+                    <div class="cart-icon" id="cartToggle">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+                <li><a href="login.html" class="btn btn-primary">Get Started</a></li>
             </ul>
         </div>
     </nav>
@@ -31,7 +37,7 @@
                 <h1>Transform Your Learning Journey</h1>
                 <p>Discover thousands of courses, learn from industry experts, and advance your career with our AI-powered learning platform.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary">Start Learning Free</a>
+                    <a href="login.html" class="btn btn-primary">Start Learning Free</a>
                     <a href="#" class="btn btn-outline">Explore Courses</a>
                 </div>
                 <div class="hero-stats">
@@ -96,7 +102,7 @@
                 <p>Discover our most popular courses across various domains</p>
             </div>
             <div class="courses-grid">
-                <div class="course-card fade-in">
+                <div class="course-card fade-in" data-course="fullstack">
                     <div class="course-image">💻</div>
                     <div class="course-content">
                         <span class="course-category">Programming</span>
@@ -108,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="course-card fade-in">
+                <div class="course-card fade-in" data-course="ml">
                     <div class="course-image">📊</div>
                     <div class="course-content">
                         <span class="course-category">Data Science</span>
@@ -120,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="course-card fade-in">
+                <div class="course-card fade-in" data-course="uiux">
                     <div class="course-image">🎨</div>
                     <div class="course-content">
                         <span class="course-category">Design</span>
@@ -135,6 +141,91 @@
             </div>
         </div>
     </section>
+
+    <!-- Course Modal -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="course-modal">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-video" id="modalVideo">
+                
+
+
+                <div class="play-button" id="playButton" >▶</div>
+            </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-category" id="modalCategory">Programming</span>
+                    <h2 class="modal-title" id="modalTitle">Full Stack Web Development</h2>
+                    <div class="modal-rating">
+                        <span class="stars" id="modalStars">⭐⭐⭐⭐⭐</span>
+                        <span id="modalRating">4.8 (2,340 reviews)</span>
+                    </div>
+                    <div class="modal-price" id="modalPrice">$99</div>
+                </div>
+
+                <div class="course-details">
+                    <div class="detail-section">
+                        <h3>What you'll learn</h3>
+                        <ul class="detail-list" id="learningPoints">
+                            <li><span class="check-icon">✓</span> Build full-stack web applications</li>
+                            <li><span class="check-icon">✓</span> Master React.js and modern JavaScript</li>
+                            <li><span class="check-icon">✓</span> Learn Node.js and Express.js</li>
+                            <li><span class="check-icon">✓</span> Work with MongoDB databases</li>
+                            <li><span class="check-icon">✓</span> Deploy applications to production</li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Course Details</h3>
+                        <ul class="detail-list" id="courseDetails">
+                            <li><span class="check-icon">📚</span> <span id="modalLessons">45 lessons</span></li>
+                            <li><span class="check-icon">⏱️</span> <span id="modalDuration">12 hours total</span></li>
+                            <li><span class="check-icon">📱</span> Access on mobile and desktop</li>
+                            <li><span class="check-icon">🏆</span> Certificate of completion</li>
+                            <li><span class="check-icon">♾️</span> Lifetime access</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="course-description-full">
+                    <h3>Course Description</h3>
+                    <p id="modalDescription">
+                        This comprehensive course will take you from beginner to advanced full-stack developer. 
+                        You'll learn to build modern web applications using the most in-demand technologies in the industry.
+                    </p>
+                    <p id="modalDescription2">
+                        By the end of this course, you'll have built several real-world projects and have the skills 
+                        to land a job as a full-stack developer or freelance with confidence.
+                    </p>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-success btn-large" id="addToCartBtn">Add to Cart</button>
+                    <button class="btn btn-primary btn-large">Enroll Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" id="cartClose">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <p>Your cart is empty</p>
+                <p>Add some courses to get started!</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Total: </span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="btn btn-primary btn-large">Proceed to Checkout</button>
+        </div>
+    </div>
 
     <!-- Testimonials Section -->
     <section class="testimonials">
@@ -183,7 +274,7 @@
         <div class="container">
             <h2>Ready to Start Learning?</h2>
             <p>Join millions of learners and transform your career today</p>
-            <a href="#" class="btn btn-white">Get Started for Free</a>
+            <a href="login.html" class="btn btn-white">Get Started for Free</a>
         </div>
     </section>
 
@@ -258,7 +349,83 @@
         // Configuration - Replace with your actual OpenAI API key
         const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY_HERE'; // Replace this with your actual API key
         const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
-        
+
+        // Course Data
+        const courseData = {
+            fullstack: {
+                id: 'fullstack',
+                category: 'Programming',
+                title: 'Full Stack Web Development',
+                price: 99,
+                rating: '4.8 (2,340 reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                lessons: '45 lessons',
+                duration: '12 hours total',
+                icon: '💻',
+                description: 'This comprehensive course will take you from beginner to advanced full-stack developer. You\'ll learn to build modern web applications using the most in-demand technologies in the industry.',
+                description2: 'By the end of this course, you\'ll have built several real-world projects and have the skills to land a job as a full-stack developer or freelance with confidence.',
+                learningPoints: [
+                    'Build full-stack web applications',
+                    'Master React.js and modern JavaScript',
+                    'Learn Node.js and Express.js',
+                    'Work with MongoDB databases',
+                    'Deploy applications to production',
+                    'Implement user authentication',
+                    'Create RESTful APIs',
+                    'Use Git for version control'
+                ]
+            },
+            ml: {
+                id: 'ml',
+                category: 'Data Science',
+                title: 'Machine Learning Fundamentals',
+                price: 129,
+                rating: '4.9 (1,890 reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                lessons: '38 lessons',
+                duration: '15 hours total',
+                icon: '📊',
+                description: 'Dive deep into the world of Machine Learning and Artificial Intelligence. This course covers all the essential algorithms and techniques used in modern ML applications.',
+                description2: 'You\'ll work with real datasets, build predictive models, and learn to evaluate and improve your machine learning solutions using industry-standard tools and practices.',
+                learningPoints: [
+                    'Understand ML algorithms and concepts',
+                    'Master Python for data science',
+                    'Work with pandas and NumPy',
+                    'Build predictive models',
+                    'Learn supervised and unsupervised learning',
+                    'Implement neural networks',
+                    'Use scikit-learn and TensorFlow',
+                    'Deploy ML models to production'
+                ]
+            },
+            uiux: {
+                id: 'uiux',
+                category: 'Design',
+                title: 'UI/UX Design Masterclass',
+                price: 89,
+                rating: '4.7 (1,560 reviews)',
+                stars: '⭐⭐⭐⭐⭐',
+                lessons: '32 lessons',
+                duration: '10 hours total',
+                icon: '🎨',
+                description: 'Learn to create beautiful, user-friendly interfaces and exceptional user experiences. This course covers design principles, user research, and modern design tools.',
+                description2: 'You\'ll build a complete design portfolio with real projects, learn industry best practices, and master the tools used by top designers at leading tech companies.',
+                learningPoints: [
+                    'Master design principles and theory',
+                    'Learn user research techniques',
+                    'Create wireframes and prototypes',
+                    'Use Figma and Adobe Creative Suite',
+                    'Design responsive interfaces',
+                    'Conduct usability testing',
+                    'Build a professional portfolio',
+                    'Understand accessibility guidelines'
+                ]
+            }
+        };
+
+        // Shopping Cart
+        let cart = [];
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -303,13 +470,163 @@
             }
         });
 
+        // Course Modal Functionality
+        const courseModal = document.getElementById('courseModal');
+        const modalClose = document.getElementById('modalClose');
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        const playButton = document.getElementById('playButton');
+
+        // Course card click handlers
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const courseId = card.getAttribute('data-course');
+                openCourseModal(courseId);
+            });
+        });
+
+        function openCourseModal(courseId) {
+            const course = courseData[courseId];
+            if (!course) return;
+
+            // Update modal content
+            document.getElementById('modalCategory').textContent = course.category;
+            document.getElementById('modalTitle').textContent = course.title;
+            document.getElementById('modalStars').textContent = course.stars;
+            document.getElementById('modalRating').textContent = course.rating;
+            document.getElementById('modalPrice').textContent = `$${course.price}`;
+            document.getElementById('modalLessons').textContent = course.lessons;
+            document.getElementById('modalDuration').textContent = course.duration;
+            document.getElementById('modalDescription').textContent = course.description;
+            document.getElementById('modalDescription2').textContent = course.description2;
+
+            // Update video icon
+            document.getElementById('modalVideo').innerHTML = `
+                <div style="font-size: 4rem;">${course.icon}</div>
+                <div class="play-button" id="playButton">▶</div>
+            `;
+
+            // Update learning points
+            const learningPointsList = document.getElementById('learningPoints');
+            learningPointsList.innerHTML = course.learningPoints.map(point => 
+                `<li><span class="check-icon">✓</span> ${point}</li>`
+            ).join('');
+
+            // Set up add to cart button
+            addToCartBtn.onclick = () => addToCart(course);
+
+            // Set up play button
+            document.getElementById('playButton').onclick = () => {
+                alert('🎥 Video preview would play here!\n\nIn a real implementation, this would show a course preview video.');
+            };
+
+            courseModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCourseModal() {
+            courseModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        modalClose.addEventListener('click', closeCourseModal);
+        courseModal.addEventListener('click', (e) => {
+            if (e.target === courseModal) {
+                closeCourseModal();
+            }
+        });
+
+        // Cart Functionality
+        const cartToggle = document.getElementById('cartToggle');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartClose = document.getElementById('cartClose');
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        const cartTotal = document.getElementById('cartTotal');
+
+        function addToCart(course) {
+            // Check if course already in cart
+            const existingItem = cart.find(item => item.id === course.id);
+            if (existingItem) {
+                alert('This course is already in your cart!');
+                return;
+            }
+
+            cart.push(course);
+            updateCartUI();
+            
+            // Show success message
+            addToCartBtn.textContent = 'Added to Cart ✓';
+            addToCartBtn.style.background = 'var(--green-600)';
+            setTimeout(() => {
+                addToCartBtn.textContent = 'Add to Cart';
+                addToCartBtn.style.background = 'var(--green-600)';
+            }, 2000);
+
+            // Close modal and show cart
+            closeCourseModal();
+            setTimeout(() => {
+                cartSidebar.classList.add('open');
+            }, 300);
+        }
+
+        function removeFromCart(courseId) {
+            cart = cart.filter(item => item.id !== courseId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            cartCount.textContent = cart.length;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <p>Your cart is empty</p>
+                        <p>Add some courses to get started!</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map(course => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">${course.icon}</div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${course.title}</div>
+                            <div class="cart-item-price">$${course.price}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart('${course.id}')">🗑️</button>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, course) => sum + course.price, 0);
+                cartTotal.textContent = `$${total}`;
+                cartFooter.style.display = 'block';
+            }
+        }
+
+        // Cart toggle handlers
+        cartToggle.addEventListener('click', () => {
+            cartSidebar.classList.toggle('open');
+        });
+
+        cartClose.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+        });
+
+        // Close cart when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!cartSidebar.contains(e.target) && !cartToggle.contains(e.target)) {
+                cartSidebar.classList.remove('open');
+            }
+        });
+
         // AI Chatbot Class
         class EduTechChatbot {
             constructor() {
                 this.isOpen = false;
                 this.isTyping = false;
                 this.conversationHistory = [];
-
+                
                 this.initializeElements();
                 this.bindEvents();
                 this.setupSystemPrompt();
@@ -401,7 +718,7 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
 
                 try {
                     let response;
-
+                    
                     // Check if API key is configured
                     if (OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE') {
                         // Use real OpenAI API
@@ -410,13 +727,13 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
                         // Use mock responses for demo
                         response = await this.getMockResponse(message);
                     }
-
+                    
                     this.hideTyping();
                     this.addMessage(response, 'bot');
-
+                    
                     // Add to conversation history
                     this.conversationHistory.push({ role: 'assistant', content: response });
-
+                    
                 } catch (error) {
                     this.hideTyping();
                     this.addMessage('Sorry, I encountered an error. Please try again later.', 'bot');
@@ -452,46 +769,38 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
                 await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
 
                 const lowerMessage = message.toLowerCase();
-
+                
                 // Smart keyword-based responses
                 if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
                     return 'Hello! Welcome to EduTech! 👋 I can help you find the perfect courses for your learning goals. What are you interested in learning?';
                 }
-
+                
                 if (lowerMessage.includes('course') || lowerMessage.includes('learn')) {
                     return 'We have over 10,000 courses across various categories! 📚 Popular areas include:\n\n• Programming (Full Stack Web Dev - $99)\n• Data Science (ML Fundamentals - $129)\n• Design (UI/UX Masterclass - $89)\n\nWhat interests you most?';
                 }
-
+                
                 if (lowerMessage.includes('programming') || lowerMessage.includes('coding') || lowerMessage.includes('web development')) {
                     return 'Great choice! 💻 Our "Full Stack Web Development" course is perfect for you. It covers React, Node.js, and MongoDB with 4.8⭐ rating. You\'ll build real projects and get job-ready skills. Want to enroll?';
                 }
-
+                
                 if (lowerMessage.includes('data science') || lowerMessage.includes('machine learning') || lowerMessage.includes('ai')) {
                     return 'Excellent! 📊 Our "Machine Learning Fundamentals" course is highly rated (4.9⭐). You\'ll learn Python, ML algorithms, and data analysis. Perfect for beginners and professionals. Ready to start your AI journey?';
                 }
-
+                
                 if (lowerMessage.includes('design') || lowerMessage.includes('ui') || lowerMessage.includes('ux')) {
                     return 'Perfect! 🎨 Our "UI/UX Design Masterclass" will teach you to create stunning interfaces. Learn design principles, prototyping, and user research. 4.7⭐ rating with real portfolio projects. Interested?';
                 }
-
+                
+                if (lowerMessage.includes('cart') || lowerMessage.includes('buy') || lowerMessage.includes('purchase')) {
+                    return 'Great! 🛒 You can add courses to your cart by clicking on any course card to see details, then hit "Add to Cart". Your cart is in the top navigation. Need help finding a specific course?';
+                }
+                
                 if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('free')) {
                     return 'Our courses range from $49-$199 💰 Most popular ones are $89-$129. We offer:\n\n• Free trial lessons\n• 30-day money-back guarantee\n• Payment plans available\n• Lifetime access\n\nWhich course interests you?';
                 }
-
+                
                 if (lowerMessage.includes('certificate') || lowerMessage.includes('certification')) {
                     return 'Yes! 🏆 All courses include industry-recognized certificates upon completion. Our certificates are valued by top companies like Google, Microsoft, and Adobe. They boost your resume and LinkedIn profile!';
-                }
-
-                if (lowerMessage.includes('help') || lowerMessage.includes('support')) {
-                    return 'I\'m here to help! 🤝 I can assist with:\n\n🎯 Course recommendations\n📚 Learning paths\n💡 Platform features\n🎓 Certificates\n📱 Technical support\n\nWhat do you need help with?';
-                }
-
-                if (lowerMessage.includes('mobile') || lowerMessage.includes('app')) {
-                    return 'Yes! 📱 Our mobile app lets you learn anywhere, anytime. Download courses for offline viewing, track progress, and get push notifications for new content. Available on iOS and Android!';
-                }
-
-                if (lowerMessage.includes('instructor') || lowerMessage.includes('teacher')) {
-                    return 'Our 500+ expert instructors are industry professionals from top companies! 👨‍🏫 They bring real-world experience and are passionate about teaching. All courses include direct instructor support and Q&A sessions.';
                 }
 
                 // Default response
@@ -502,7 +811,7 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}`;
                 messageDiv.textContent = text;
-
+                
                 this.messages.appendChild(messageDiv);
                 this.messages.scrollTop = this.messages.scrollHeight;
             }
@@ -510,7 +819,7 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
             showTyping() {
                 this.isTyping = true;
                 this.send.disabled = true;
-
+                
                 const typingDiv = document.createElement('div');
                 typingDiv.className = 'message typing';
                 typingDiv.id = 'typing-indicator';
@@ -522,7 +831,7 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
                         <div class="typing-dot"></div>
                     </div>
                 `;
-
+                
                 this.messages.appendChild(typingDiv);
                 this.messages.scrollTop = this.messages.scrollHeight;
             }
@@ -530,7 +839,7 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
             hideTyping() {
                 this.isTyping = false;
                 this.send.disabled = false;
-
+                
                 const typingIndicator = document.getElementById('typing-indicator');
                 if (typingIndicator) {
                     typingIndicator.remove();
@@ -548,14 +857,24 @@ Be helpful, friendly, and concise. Always try to guide users toward relevant cou
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-8px)';
             });
-
+            
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
             });
         });
 
-        console.log('🎓 EduTech Homepage with AI Chatbot Loaded Successfully! 🤖');
-        console.log('💡 To connect to OpenAI: Replace YOUR_OPENAI_API_KEY_HERE with your actual API key');
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close modals
+            if (e.key === 'Escape') {
+                closeCourseModal();
+                cartSidebar.classList.remove('open');
+            }
+        });
+
+        console.log('🎓 EduTech Homepage with Course Details & Cart Loaded Successfully! 🛒');
+        console.log('💡 Features: Course modals, video previews, shopping cart, AI chatbot');
+        console.log('🔑 To connect to OpenAI: Replace YOUR_OPENAI_API_KEY_HERE with your actual API key');
     </script>
 </body>
 </html>
