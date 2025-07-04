@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduTech</title>
+    <link href="login.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🎓</div>
+                EduTech
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courses">Courses</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="login.html" class="btn btn-primary active">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <!-- Left Side - Hero Content -->
+        <div class="login-left">
+            <div class="login-hero fade-in">
+                <h1>Welcome Back to EduTech</h1>
+                <p>Continue your learning journey with our AI-powered platform and unlock your potential.</p>
+
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🎥</div>
+                        <h3>AI Video Summarizer</h3>
+                        <p>Get instant summaries and key points from course videos</p>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">📝</div>
+                        <h3>Smart Note Taking</h3>
+                        <p>Organize and sync your notes across all devices</p>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🤖</div>
+                        <h3>Doubt Solver AI</h3>
+                        <p>Get instant help with course-specific questions</p>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🏆</div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your learning progress and achievements</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-right">
+            <div class="login-form-container fade-in">
+                <div class="login-header">
+                    <h2>Sign In</h2>
+                    <p>Access your learning dashboard</p>
+
+                    <div class="auth-tabs">
+                        <div class="auth-tab active" data-tab="login">Sign In</div>
+                        <div class="auth-tab" data-tab="register">Sign Up</div>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <div class="input-icon">
+                            <span class="icon">📧</span>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-error" id="emailError">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-icon">
+                            <span class="icon">🔒</span>
+                            <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                            <span class="password-toggle" id="passwordToggle">👁️</span>
+                        </div>
+                        <div class="form-error" id="passwordError">Password must be at least 6 characters</div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" id="forgotPassword">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary submit-btn" id="loginBtn">
+                        <span class="btn-text">Sign In</span>
+                        <div class="btn-loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form class="login-form" id="registerForm" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">Full Name</label>
+                        <div class="input-icon">
+                            <span class="icon">👤</span>
+                            <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-error" id="nameError">Please enter your full name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="registerEmail">Email Address</label>
+                        <div class="input-icon">
+                            <span class="icon">📧</span>
+                            <input type="email" id="registerEmail" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-error" id="registerEmailError">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="registerPassword">Password</label>
+                        <div class="input-icon">
+                            <span class="icon">🔒</span>
+                            <input type="password" id="registerPassword" class="form-input" placeholder="Create a password" required>
+                            <span class="password-toggle" id="registerPasswordToggle">👁️</span>
+                        </div>
+                        <div class="form-error" id="registerPasswordError">Password must be at least 6 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                        <div class="input-icon">
+                            <span class="icon">🔒</span>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                        </div>
+                        <div class="form-error" id="confirmPasswordError">Passwords do not match</div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="#" style="color: var(--primary-blue);">Terms & Conditions</a></label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary submit-btn" id="registerBtn">
+                        <span class="btn-text">Create Account</span>
+                        <div class="btn-loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="btn btn-google" id="googleLogin">
+                        <span style="font-size: 1.25rem;">🔍</span>
+                        Continue with Google
+                    </button>
+                    <button class="btn btn-github" id="githubLogin">
+                        <span style="font-size: 1.25rem;">⚫</span>
+                        Continue with GitHub
+                    </button>
+                </div>
+
+                <div class="login-footer">
+                    <p id="authFooter">
+                        Don't have an account? 
+                        <a href="#" id="switchAuth">Sign up here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">✅</div>
+            <h3 id="successTitle">Welcome to EduTech!</h3>
+            <p id="successMessage">You have successfully signed in. Redirecting to your dashboard...</p>
+            <button class="btn btn-primary" id="continueBtn">Continue to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Authentication System
+        class AuthSystem {
+            constructor() {
+                this.currentTab = 'login';
+                this.users = JSON.parse(localStorage.getItem('edutech_users') || '[]');
+                this.currentUser = JSON.parse(localStorage.getItem('edutech_current_user') || 'null');
+
+                this.initializeEventListeners();
+                this.checkAuthStatus();
+            }
+
+            initializeEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.auth-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabType = tab.getAttribute('data-tab');
+                        this.switchTab(tabType);
+                    });
+                });
+
+                // Form submissions
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+
+                document.getElementById('registerForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegister();
+                });
+
+                // Password toggles
+                document.getElementById('passwordToggle').addEventListener('click', () => {
+                    this.togglePassword('password');
+                });
+
+                document.getElementById('registerPasswordToggle').addEventListener('click', () => {
+                    this.togglePassword('registerPassword');
+                });
+
+                // Social logins
+                document.getElementById('googleLogin').addEventListener('click', () => {
+                    this.handleSocialLogin('Google');
+                });
+
+                document.getElementById('githubLogin').addEventListener('click', () => {
+                    this.handleSocialLogin('GitHub');
+                });
+
+                // Switch auth mode
+                document.getElementById('switchAuth').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTab = this.currentTab === 'login' ? 'register' : 'login';
+                    this.switchTab(newTab);
+                });
+
+                // Forgot password
+                document.getElementById('forgotPassword').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleForgotPassword();
+                });
+
+                // Continue button
+                document.getElementById('continueBtn').addEventListener('click', () => {
+                    this.redirectToDashboard();
+                });
+
+                // Real-time validation
+                document.getElementById('email').addEventListener('input', () => {
+                    this.validateEmail('email', 'emailError');
+                });
+
+                document.getElementById('registerEmail').addEventListener('input', () => {
+                    this.validateEmail('registerEmail', 'registerEmailError');
+                });
+
+                document.getElementById('password').addEventListener('input', () => {
+                    this.validatePassword('password', 'passwordError');
+                });
+
+                document.getElementById('registerPassword').addEventListener('input', () => {
+                    this.validatePassword('registerPassword', 'registerPasswordError');
+                });
+
+                document.getElementById('confirmPassword').addEventListener('input', () => {
+                    this.validatePasswordMatch();
+                });
+            }
+
+            checkAuthStatus() {
+                // If user is already logged in, redirect to dashboard
+                if (this.currentUser) {
+                    this.showSuccessModal('Welcome back!', `Hello ${this.currentUser.name}, you're already signed in.`);
+                }
+            }
+
+            switchTab(tabType) {
+                this.currentTab = tabType;
+
+                // Update tab buttons
+                document.querySelectorAll('.auth-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabType}"]`).classList.add('active');
+
+                // Update forms
+                if (tabType === 'login') {
+                    document.getElementById('loginForm').style.display = 'block';
+                    document.getElementById('registerForm').style.display = 'none';
+                    document.getElementById('authFooter').innerHTML = `
+                        Don't have an account? 
+                        <a href="#" id="switchAuth">Sign up here</a>
+                    `;
+                } else {
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('registerForm').style.display = 'block';
+                    document.getElementById('authFooter').innerHTML = `
+                        Already have an account? 
+                        <a href="#" id="switchAuth">Sign in here</a>
+                    `;
+                }
+
+                // Re-bind switch auth event
+                document.getElementById('switchAuth').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTab = this.currentTab === 'login' ? 'register' : 'login';
+                    this.switchTab(newTab);
+                });
+            }
+
+            togglePassword(inputId) {
+                const input = document.getElementById(inputId);
+                const toggle = document.getElementById(inputId + 'Toggle');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    toggle.textContent = '🙈';
+                } else {
+                    input.type = 'password';
+                    toggle.textContent = '👁️';
+                }
+            }
+
+            validateEmail(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (input.value && !emailRegex.test(input.value)) {
+                    input.classList.add('error');
+                    input.classList.remove('success');
+                    error.classList.add('show');
+                    return false;
+                } else if (input.value) {
+                    input.classList.remove('error');
+                    input.classList.add('success');
+                    error.classList.remove('show');
+                    return true;
+                } else {
+                    input.classList.remove('error', 'success');
+                    error.classList.remove('show');
+                    return false;
+                }
+            }
+
+            validatePassword(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+
+                if (input.value && input.value.length < 6) {
+                    input.classList.add('error');
+                    input.classList.remove('success');
+                    error.classList.add('show');
+                    return false;
+                } else if (input.value) {
+                    input.classList.remove('error');
+                    input.classList.add('success');
+                    error.classList.remove('show');
+                    return true;
+                } else {
+                    input.classList.remove('error', 'success');
+                    error.classList.remove('show');
+                    return false;
+                }
+            }
+
+            validatePasswordMatch() {
+                const password = document.getElementById('registerPassword');
+                const confirmPassword = document.getElementById('confirmPassword');
+                const error = document.getElementById('confirmPasswordError');
+
+                if (confirmPassword.value && password.value !== confirmPassword.value) {
+                    confirmPassword.classList.add('error');
+                    confirmPassword.classList.remove('success');
+                    error.classList.add('show');
+                    return false;
+                } else if (confirmPassword.value) {
+                    confirmPassword.classList.remove('error');
+                    confirmPassword.classList.add('success');
+                    error.classList.remove('show');
+                    return true;
+                } else {
+                    confirmPassword.classList.remove('error', 'success');
+                    error.classList.remove('show');
+                    return false;
+                }
+            }
+
+            async handleLogin() {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const remember = document.getElementById('remember').checked;
+
+                // Validate inputs
+                const emailValid = this.validateEmail('email', 'emailError');
+                const passwordValid = this.validatePassword('password', 'passwordError');
+
+                if (!emailValid || !passwordValid) {
+                    return;
+                }
+
+                // Show loading
+                this.setButtonLoading('loginBtn', true);
+
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    // Check if user exists
+                    const user = this.users.find(u => u.email === email && u.password === password);
+
+                    if (user) {
+                        // Successful login
+                        this.currentUser = user;
+                        localStorage.setItem('edutech_current_user', JSON.stringify(user));
+
+                        if (remember) {
+                            localStorage.setItem('edutech_remember_user', 'true');
+                        }
+
+                        this.showSuccessModal('Welcome back!', `Hello ${user.name}, you have successfully signed in.`);
+                    } else {
+                        // Check if it's a demo account
+                        if (email === 'demo@edutech.com' && password === 'demo123') {
+                            const demoUser = {
+                                id: 'demo',
+                                name: 'Demo User',
+                                email: 'demo@edutech.com',
+                                joinDate: new Date().toISOString()
+                            };
+
+                            this.currentUser = demoUser;
+                            localStorage.setItem('edutech_current_user', JSON.stringify(demoUser));
+
+                            this.showSuccessModal('Welcome to EduTech!', 'You have successfully signed in with the demo account.');
+                        } else {
+                            throw new Error('Invalid email or password');
+                        }
+                    }
+                } catch (error) {
+                    this.showError('Invalid email or password. Try demo@edutech.com / demo123');
+                } finally {
+                    this.setButtonLoading('loginBtn', false);
+                }
+            }
+
+            async handleRegister() {
+                const name = document.getElementById('fullName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const terms = document.getElementById('terms').checked;
+
+                // Validate inputs
+                const nameValid = name.length >= 2;
+                const emailValid = this.validateEmail('registerEmail', 'registerEmailError');
+                const passwordValid = this.validatePassword('registerPassword', 'registerPasswordError');
+                const passwordMatchValid = this.validatePasswordMatch();
+
+                if (!nameValid) {
+                    document.getElementById('nameError').classList.add('show');
+                    return;
+                }
+
+                if (!emailValid || !passwordValid || !passwordMatchValid) {
+                    return;
+                }
+
+                if (!terms) {
+                    alert('Please accept the Terms & Conditions');
+                    return;
+                }
+
+                // Show loading
+                this.setButtonLoading('registerBtn', true);
+
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    // Check if user already exists
+                    const existingUser = this.users.find(u => u.email === email);
+                    if (existingUser) {
+                        throw new Error('An account with this email already exists');
+                    }
+
+                    // Create new user
+                    const newUser = {
+                        id: Date.now().toString(),
+                        name: name,
+                        email: email,
+                        password: password,
+                        joinDate: new Date().toISOString()
+                    };
+
+                    this.users.push(newUser);
+                    localStorage.setItem('edutech_users', JSON.stringify(this.users));
+
+                    this.currentUser = newUser;
+                    localStorage.setItem('edutech_current_user', JSON.stringify(newUser));
+
+                    this.showSuccessModal('Account Created!', `Welcome to EduTech, ${name}! Your account has been created successfully.`);
+                } catch (error) {
+                    this.showError(error.message);
+                } finally {
+                    this.setButtonLoading('registerBtn', false);
+                }
+            }
+
+            async handleSocialLogin(provider) {
+                try {
+                    // Simulate social login
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    const socialUser = {
+                        id: `${provider.toLowerCase()}_${Date.now()}`,
+                        name: `${provider} User`,
+                        email: `user@${provider.toLowerCase()}.com`,
+                        provider: provider,
+                        joinDate: new Date().toISOString()
+                    };
+
+                    this.currentUser = socialUser;
+                    localStorage.setItem('edutech_current_user', JSON.stringify(socialUser));
+
+                    this.showSuccessModal('Welcome to EduTech!', `You have successfully signed in with ${provider}.`);
+                } catch (error) {
+                    this.showError(`${provider} login is currently unavailable. Please try again later.`);
+                }
+            }
+
+            handleForgotPassword() {
+                const email = prompt('Please enter your email address:');
+                if (email) {
+                    alert(`Password reset instructions have been sent to ${email}`);
+                }
+            }
+
+            setButtonLoading(buttonId, loading) {
+                const button = document.getElementById(buttonId);
+                const text = button.querySelector('.btn-text');
+                const spinner = button.querySelector('.btn-loading');
+
+                if (loading) {
+                    button.disabled = true;
+                    text.style.opacity = '0';
+                    spinner.style.display = 'block';
+                } else {
+                    button.disabled = false;
+                    text.style.opacity = '1';
+                    spinner.style.display = 'none';
+                }
+            }
+
+            showError(message) {
+                alert(`❌ Error: ${message}`);
+            }
+
+            showSuccessModal(title, message) {
+                document.getElementById('successTitle').textContent = title;
+                document.getElementById('successMessage').textContent = message;
+                document.getElementById('successModal').classList.add('show');
+            }
+
+            redirectToDashboard() {
+                // In a real app, this would redirect to the dashboard
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize authentication system
+        document.addEventListener('DOMContentLoaded', () => {
+            new AuthSystem();
+        });
+
+        // Add fade-in animation on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationDelay = `${index * 0.1}s`;
+                }, 100);
+            });
+        });
+
+        console.log('🔐 EduTech Login System Loaded Successfully!');
+        console.log('💡 Demo Account: demo@edutech.com / demo123');
+        console.log('✨ Features: Registration, Social Login, Password Reset, Form Validation');
+    </script>
+</body>
+</html>
