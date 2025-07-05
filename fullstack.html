@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Development Course - EduTech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0e27, #1a1f3a, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Course Info Panel */
+        .course-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            height: fit-content;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .course-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Video Player Section */
+        .video-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .video-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .control-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .video-player {
+            position: relative;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            margin-bottom: 1.5rem;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-overlay:hover {
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #0a0e27;
+            transition: all 0.3s ease;
+        }
+
+        .play-icon:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        /* AI Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .summary-box.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Playlist */
+        .playlist-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .playlist-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .lesson-list {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 212, 255, 0.5) transparent;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .lesson-item.active {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
+            border-color: #00d4ff;
+        }
+
+        .lesson-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .lesson-number.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .lesson-content {
+            flex: 1;
+        }
+
+        .lesson-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .lesson-duration {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .panel-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            color: white;
+        }
+
+        .tab-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Notes Section */
+        .notes-input {
+            width: 100%;
+            min-height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            color: white;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .notes-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        .notes-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .add-note-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .add-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .notes-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .note-card {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            animation: noteSlideIn 0.3s ease;
+        }
+
+        @keyframes noteSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-lesson {
+            color: #00d4ff;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .note-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+        }
+
+        .note-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .note-date {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+            border-radius: 8px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Chat Section */
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 212, 255, 0.5) transparent;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            animation: messageSlideIn 0.3s ease;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            color: white;
+        }
+
+        .message.ai .message-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 0.25rem;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator.show {
+            display: flex;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .course-title {
+                font-size: 2rem;
+            }
+
+            .course-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .video-controls {
+                flex-direction: column;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00d4ff;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00b8d4, #6d28d9);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🚀</div>
+                EduTech Pro
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn"><a href="home.html" style="text-decoration: none; color: white;"target="_blank">Dashboard</a></button>
+                
+                <button class="nav-btn"><a href="profile.html" style="text-decoration: none; color: white;"target="_blank">Profile</a></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Course Info Panel -->
+            <div class="course-panel">
+                <div class="course-header">
+                    <h1 class="course-title">Full Stack Development</h1>
+                    <p class="course-subtitle">Master React, Node.js, MongoDB & More</p>
+                </div>
+
+                <div class="course-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">25K</div>
+                        <div class="stat-label">Students</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">45h</div>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="video-header">
+                    <h2 class="video-title" id="currentVideoTitle">Introduction to Full Stack Development</h2>
+                    <div class="video-controls">
+                        <button class="control-btn" onclick="generateSummary()">
+                            <span>🧠</span>
+                            <span id="summaryBtnText">AI Summary</span>
+                        </button>
+                        <button class="control-btn secondary">
+                            <span>📥</span>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-player">
+                    <div class="video-overlay" onclick="toggleVideo()">
+                        <div class="play-icon" id="playIcon"><a href="https://youtu.be/Vi9bxu-M-ag?si=6Vr7y3CWnv3MT1w8" style="text-decoration: none; color: white;"target="_blank">▶️</a></div>
+                    </div>
+                </div>
+
+                <div class="summary-box" id="summaryBox">
+                    <div class="summary-header">
+                        <span>🤖</span>
+                        <span>AI Generated Summary</span>
+                    </div>
+                    <p id="summaryContent"></p>
+                </div>
+            </div>
+
+            <!-- Playlist Section -->
+            <div class="playlist-section">
+                <h3 class="playlist-header">
+                    <span>📚</span>
+                    Course Lessons
+                </h3>
+                <div class="lesson-list" id="lessonList">
+                    <div class="lesson-item active" onclick="selectLesson(1, 'Introduction to Full Stack Development')">
+                        <div class="lesson-number completed">✓</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">Introduction to Full Stack Development</div>
+                            <div class="lesson-duration">15:30 • Completed</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-item" onclick="selectLesson(2, 'Setting Up Your Development Environment')">
+                        <div class="lesson-number completed">✓</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">Setting Up Your Development Environment</div>
+                            <div class="lesson-duration">22:45 • Completed</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-item" onclick="selectLesson(3, 'HTML5 & Modern Web Standards')">
+                        <div class="lesson-number">3</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">HTML5 & Modern Web Standards</div>
+                            <div class="lesson-duration">28:15 • In Progress</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-item" onclick="selectLesson(4, 'CSS3 & Advanced Styling')">
+                        <div class="lesson-number">4</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">CSS3 & Advanced Styling</div>
+                            <div class="lesson-duration">35:20 • Locked</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-item" onclick="selectLesson(5, 'JavaScript ES6+ Fundamentals')">
+                        <div class="lesson-number">5</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">JavaScript ES6+ Fundamentals</div>
+                            <div class="lesson-duration">42:10 • Locked</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-item" onclick="selectLesson(6, 'React.js Deep Dive')">
+                        <div class="lesson-number">6</div>
+                        <div class="lesson-content">
+                            <div class="lesson-title">React.js Deep Dive</div>
+                            <div class="lesson-duration">38:55 • Locked</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-panel">
+                <div class="panel-tabs">
+                    <button class="tab-btn active" onclick="switchTab('notes')">
+                        <span>📝</span>
+                        Notes
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('chat')">
+                        <span>🤖</span>
+                        AI Tutor
+                    </button>
+                </div>
+
+                <!-- Notes Tab -->
+                <div class="tab-content active" id="notesTab">
+                    <textarea 
+                        class="notes-input" 
+                        id="notesInput" 
+                        placeholder="Take notes for this lesson... 📝"
+                    ></textarea>
+                    <button class="add-note-btn" onclick="addNote()">
+                        ➕ Add Note
+                    </button>
+
+                    <div class="notes-list" id="notesList">
+                        <div class="empty-state">
+                            <div class="empty-icon">📝</div>
+                            <p>No notes yet. Start taking notes to enhance your learning!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Tab -->
+                <div class="tab-content" id="chatTab">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message ai">
+                                <div class="message-bubble">
+                                    <div>👋 Hi! I'm your AI tutor for Full Stack Development. I can help you understand concepts, debug code, and answer any questions about React, Node.js, MongoDB, and more!</div>
+                                    <div class="message-time" id="initialMessageTime"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="typing-indicator" id="typingIndicator">
+                            <span>AI is thinking</span>
+                            <div class="typing-dots">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-container">
+                            <input 
+                                type="text" 
+                                class="chat-input" 
+                                id="chatInput" 
+                                placeholder="Ask me anything about full stack development..."
+                                onkeypress="handleChatKeyPress(event)"
+                            >
+                            <button class="send-btn" onclick="sendMessage()" id="sendButton">
+                                🚀 Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global State
+        let currentLesson = 1;
+        let currentLessonTitle = "Introduction to Full Stack Development";
+        let isVideoPlaying = false;
+        let notes = [];
+        let chatMessages = [
+            {
+                type: 'ai',
+                content: "👋 Hi! I'm your AI tutor for Full Stack Development. I can help you understand concepts, debug code, and answer any questions about React, Node.js, MongoDB, and more!",
+                timestamp: new Date()
+            }
+        ];
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Set initial message time
+            document.getElementById('initialMessageTime').textContent = new Date().toLocaleTimeString();
+
+            // Load saved data
+            loadNotes();
+            loadChatHistory();
+
+            // Render initial state
+            renderNotes();
+            renderChatMessages();
+
+            console.log('🚀 EduTech Pro Course Player Initialized!');
+        }
+
+        // Tab Management
+        function switchTab(tabName) {
+            // Remove active states
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active states
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            console.log(`Switched to ${tabName} tab`);
+        }
+
+        // Video Management
+        function toggleVideo() {
+            const playIcon = document.getElementById('playIcon');
+
+            if (isVideoPlaying) {
+                playIcon.textContent = '▶️';
+                isVideoPlaying = false;
+                console.log('Video paused');
+            } else {
+                playIcon.textContent = '⏸️';
+                isVideoPlaying = true;
+                console.log('Video playing:', currentLessonTitle);
+            }
+        }
+
+        function selectLesson(lessonId, lessonTitle) {
+            // Remove active state from all lessons
+            document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
+
+            // Add active state to selected lesson
+            event.currentTarget.classList.add('active');
+
+            // Update current lesson
+            currentLesson = lessonId;
+            currentLessonTitle = lessonTitle;
+            document.getElementById('currentVideoTitle').textContent = lessonTitle;
+
+            // Reset video state
+            document.getElementById('playIcon').textContent = '▶️';
+            isVideoPlaying = false;
+
+            // Hide summary
+            document.getElementById('summaryBox').classList.remove('show');
+
+            console.log(`Selected lesson ${lessonId}: ${lessonTitle}`);
+        }
+
+        // AI Summary Generation
+        function generateSummary() {
+            const summaryBtn = document.getElementById('summaryBtnText');
+            const summaryBox = document.getElementById('summaryBox');
+            const summaryContent = document.getElementById('summaryContent');
+
+            summaryBtn.innerHTML = '<span class="loading"></span> Generating...';
+
+            setTimeout(() => {
+                const summaries = {
+                    1: "🎯 This introductory lesson covers the complete roadmap of full-stack development. You'll learn about the client-server architecture, understand how frontend and backend communicate, and get an overview of the MERN stack (MongoDB, Express.js, React, Node.js). Key takeaways include understanding the role of each technology and how they work together to create modern web applications.",
+
+                    2: "⚙️ This comprehensive setup guide walks you through installing all necessary development tools. You'll install Node.js and npm, set up VS Code with essential extensions like ES7+ React snippets and Prettier, configure Git for version control, and create your first project structure. By the end, you'll have a professional development environment ready for full-stack development.",
+
+                    3: "🌐 Deep dive into HTML5 semantic elements and modern web standards. Learn about semantic tags (header, nav, main, article, section, aside, footer), accessibility best practices with ARIA attributes, SEO optimization techniques, and HTML5 APIs like localStorage and geolocation. This lesson emphasizes writing clean, semantic markup that's both human and machine-readable.",
+
+                    4: "🎨 Master CSS3 advanced features and responsive design principles. Explore Flexbox and CSS Grid for modern layouts, CSS custom properties (variables), animations and transitions, media queries for responsive design, and CSS methodologies like BEM. You'll also learn about CSS preprocessors and modern CSS-in-JS solutions.",
+
+                    5: "⚡ Comprehensive guide to modern JavaScript ES6+ features. Cover arrow functions, destructuring assignment, template literals, async/await for handling promises, modules and imports/exports, and functional programming concepts. This lesson focuses on writing clean, modern JavaScript that follows current best practices.",
+
+                    6: "⚛️ Complete React.js deep dive covering components, JSX, props, state management with hooks (useState, useEffect, useContext), component lifecycle, event handling, and building reusable UI components. You'll also learn about React Router for navigation and best practices for structuring React applications."
+                };
+
+                summaryContent.textContent = summaries[currentLesson] || "📚 This lesson covers essential concepts in full-stack development. The AI summary will provide key insights and takeaways to help reinforce your learning.";
+                summaryBox.classList.add('show');
+                summaryBtn.textContent = 'AI Summary';
+
+                console.log('Generated summary for lesson', currentLesson);
+            }, 2500);
+        }
+
+        // Notes Management
+        function addNote() {
+            const notesInput = document.getElementById('notesInput');
+            const noteText = notesInput.value.trim();
+
+            if (noteText) {
+                const note = {
+                    id: Date.now(),
+                    lessonId: currentLesson,
+                    lessonTitle: currentLessonTitle,
+                    content: noteText,
+                    timestamp: "00:00", // In real app, would be current video time
+                    createdAt: new Date()
+                };
+
+                notes.unshift(note); // Add to beginning of array
+                notesInput.value = '';
+                renderNotes();
+                saveNotes();
+
+                console.log('Added note:', note);
+            }
+        }
+
+        function deleteNote(noteId) {
+            if (confirm('🗑️ Delete this note?')) {
+                notes = notes.filter(note => note.id !== noteId);
+                renderNotes();
+                saveNotes();
+                console.log('Deleted note:', noteId);
+            }
+        }
+
+        function renderNotes() {
+            const notesList = document.getElementById('notesList');
+
+            if (notes.length === 0) {
+                notesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>No notes yet. Start taking notes to enhance your learning!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            notesList.innerHTML = notes.map(note => `
+                <div class="note-card">
+                    <div class="note-header">
+                        <div class="note-lesson">${note.lessonTitle}</div>
+                        <div class="note-time">${note.timestamp}</div>
+                    </div>
+                    <div class="note-text">${note.content}</div>
+                    <div class="note-actions">
+                        <div class="note-date">${note.createdAt.toLocaleDateString()}</div>
+                        <button class="delete-btn" onclick="deleteNote(${note.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveNotes() {
+            localStorage.setItem('edutech_notes', JSON.stringify(notes));
+        }
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('edutech_notes');
+            if (savedNotes) {
+                notes = JSON.parse(savedNotes).map(note => ({
+                    ...note,
+                    createdAt: new Date(note.createdAt)
+                }));
+            }
+        }
+
+        // Chat Management
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+
+            if (message) {
+                // Add user message
+                chatMessages.push({
+                    type: 'user',
+                    content: message,
+                    timestamp: new Date()
+                });
+
+                chatInput.value = '';
+                renderChatMessages();
+
+                // Show typing indicator
+                document.getElementById('typingIndicator').classList.add('show');
+                document.getElementById('sendButton').disabled = true;
+
+                // Generate AI response
+                setTimeout(() => {
+                    const aiResponse = generateAIResponse(message);
+                    chatMessages.push({
+                        type: 'ai',
+                        content: aiResponse,
+                        timestamp: new Date()
+                    });
+
+                    document.getElementById('typingIndicator').classList.remove('show');
+                    document.getElementById('sendButton').disabled = false;
+                    renderChatMessages();
+                    saveChatHistory();
+                }, 2000);
+            }
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+
+            // Advanced AI responses based on context
+            if (message.includes('react') || message.includes('component')) {
+                return "⚛️ React is a powerful library for building user interfaces! Key concepts include:\n\n🔹 **Components**: Reusable UI pieces\n🔹 **JSX**: JavaScript XML syntax\n🔹 **Props**: Data passed to components\n🔹 **State**: Component's internal data\n🔹 **Hooks**: useState, useEffect, etc.\n\nWhat specific React concept would you like me to explain further?";
+            }
+
+            if (message.includes('node') || message.includes('backend') || message.includes('server')) {
+                return "🚀 Node.js enables JavaScript on the server! Here's what you need to know:\n\n🔹 **Runtime**: V8 JavaScript engine\n🔹 **NPM**: Package manager with millions of packages\n🔹 **Express.js**: Web framework for APIs\n🔹 **Async/Await**: Handle asynchronous operations\n🔹 **Middleware**: Functions that execute during request/response cycle\n\nAre you working on a specific backend feature?";
+            }
+
+            if (message.includes('mongo') || message.includes('database') || message.includes('db')) {
+                return "🍃 MongoDB is a flexible NoSQL database perfect for modern apps!\n\n🔹 **Documents**: JSON-like data storage\n🔹 **Collections**: Groups of documents\n🔹 **Mongoose**: ODM for Node.js\n🔹 **CRUD**: Create, Read, Update, Delete operations\n🔹 **Indexing**: Optimize query performance\n\nNeed help with database design or queries?";
+            }
+
+            if (message.includes('javascript') || message.includes('js') || message.includes('es6')) {
+                return "⚡ Modern JavaScript ES6+ is amazing! Essential features:\n\n🔹 **Arrow Functions**: Concise function syntax\n🔹 **Destructuring**: Extract values from objects/arrays\n🔹 **Template Literals**: String interpolation with backticks\n🔹 **Async/Await**: Clean asynchronous code\n🔹 **Modules**: Import/export functionality\n\nWhich JavaScript feature are you curious about?";
+            }
+
+            if (message.includes('css') || message.includes('style') || message.includes('design')) {
+                return "🎨 CSS3 offers incredible styling capabilities!\n\n🔹 **Flexbox**: One-dimensional layouts\n🔹 **Grid**: Two-dimensional layouts\n🔹 **Custom Properties**: CSS variables\n🔹 **Animations**: Smooth transitions and keyframes\n🔹 **Media Queries**: Responsive design\n\nWhat styling challenge can I help you solve?";
+            }
+
+            if (message.includes('help') || message.includes('stuck') || message.includes('error')) {
+                return "🆘 I'm here to help you overcome any challenge!\n\n🔹 **Debugging**: Let's trace through your code\n🔹 **Concepts**: I'll explain any topic clearly\n🔹 **Best Practices**: Learn industry standards\n🔹 **Project Ideas**: Get inspiration for practice\n🔹 **Career Advice**: Full-stack development path\n\nDescribe your specific issue and I'll provide targeted assistance!";
+            }
+
+            if (message.includes('project') || message.includes('build') || message.includes('create')) {
+                return "🏗️ Ready to build something awesome? Here are some project ideas:\n\n🔹 **Todo App**: CRUD operations with React & Node\n🔹 **Blog Platform**: User auth, posts, comments\n🔹 **E-commerce**: Shopping cart, payments, inventory\n🔹 **Social Media**: Posts, likes, real-time chat\n🔹 **Portfolio**: Showcase your skills\n\nWhich type of project interests you most?";
+            }
+
+            // Default comprehensive response
+            return "🤖 Great question! As your AI tutor, I'm here to help with all aspects of full-stack development:\n\n🔹 **Frontend**: React, HTML5, CSS3, JavaScript\n🔹 **Backend**: Node.js, Express.js, APIs\n🔹 **Database**: MongoDB, data modeling\n🔹 **Tools**: Git, npm, deployment\n🔹 **Concepts**: Architecture, best practices\n\nFeel free to ask about specific topics, share code for review, or request explanations of any concept. What would you like to explore?";
+        }
+
+        function renderChatMessages() {
+            const chatContainer = document.getElementById('chatMessages');
+
+            chatContainer.innerHTML = chatMessages.map(message => `
+                <div class="message ${message.type}">
+                    <div class="message-bubble">
+                        <div>${message.content.replace(/\n/g, '<br>')}</div>
+                        <div class="message-time">${message.timestamp.toLocaleTimeString()}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Auto-scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function saveChatHistory() {
+            localStorage.setItem('edutech_chat', JSON.stringify(chatMessages));
+        }
+
+        function loadChatHistory() {
+            const savedChat = localStorage.getItem('edutech_chat');
+            if (savedChat) {
+                chatMessages = JSON.parse(savedChat).map(message => ({
+                    ...message,
+                    timestamp: new Date(message.timestamp)
+                }));
+            }
+        }
+
+        // Initialize chat messages
+        setTimeout(() => {
+            renderChatMessages();
+        }, 100);
+
+        console.log('🎓 EduTech Pro - Full Stack Development Course');
+        console.log('✨ Features: AI Tutor, Smart Notes, Video Summaries, Interactive Learning');
+    </script>
+</body>
+</html>

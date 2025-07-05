@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - EduTech Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0e27, #1a1f3a, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d4ff;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-color: transparent;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Profile Sidebar */
+        .profile-sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .profile-avatar-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid #0a0e27;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-edit:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+        }
+
+        .profile-role {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .profile-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .menu-link:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .menu-link.active {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .edit-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2300d4ff" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+            padding-right: 3rem;
+        }
+
+        /* Achievement Cards */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .achievement-card {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .achievement-card:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .achievement-card.locked {
+            opacity: 0.5;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .achievement-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #00d4ff;
+        }
+
+        .achievement-description {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .profile-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00d4ff;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }
+
+        .modal-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo" onclick="goToDashboard()">
+                <div class="logo-icon">🚀</div>
+                EduTech Pro
+            </div>
+            <div class="nav-buttons">
+                <a href="home.html" class="nav-btn">
+                    <span>🏠</span>
+                    Dashboard
+                </a>
+                
+                <a href="profile-page.html" class="nav-btn active">
+                    <span>👤</span>
+                    Profile
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Profile Sidebar -->
+        <div class="profile-sidebar">
+            <div class="profile-avatar-section">
+                <div class="avatar-container">
+                    <div class="profile-avatar" id="profileAvatar">JD</div>
+                    <div class="avatar-edit" onclick="changeAvatar()">
+                        <span>📷</span>
+                    </div>
+                </div>
+                <div class="profile-name" id="profileName">Neha Agarwal</div>
+                <div class="profile-role" id="profileRole">Premium Student</div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="coursesCompleted">15</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="certificatesEarned">8</div>
+                    <div class="stat-label">Certificates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="learningStreak">12</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalHours">142</div>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+
+            <ul class="profile-menu">
+                <li class="menu-item">
+                    <a href="#" class="menu-link active" onclick="showSection('personal')">
+                        <span>👤</span>
+                        Personal Info
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="showSection('security')">
+                        <span>🔒</span>
+                        Security
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="showSection('preferences')">
+                        <span>⚙️</span>
+                        Preferences
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="showSection('achievements')">
+                        <span>🏆</span>
+                        Achievements
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="showSection('billing')">
+                        <span>💳</span>
+                        Billing
+                    </a>
+                </li>
+            </ul>
+
+            <button class="logout-btn" onclick="showLogoutModal()">
+                <span>🚪</span>
+                Logout
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Personal Information Section -->
+            <div id="personalSection" class="content-section">
+                <div class="content-header">
+                    <h1 class="content-title">Personal Information</h1>
+                    <button class="edit-btn" onclick="toggleEdit()" id="editBtn">
+                        <span>✏️</span>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>📋</span>
+                        Basic Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" id="firstName" value="Neha" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" id="lastName" value="Agarwal" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="email" value="neha25agarwal.com" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" value="+1 (555) 123-4567" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-input" id="dateOfBirth" value="1995-06-15" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-input form-select" id="gender" disabled>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>📍</span>
+                        Location & Contact
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Country</label>
+                            <select class="form-input form-select" id="country" disabled>
+                                <option value="us" selected>United States</option>
+                                <option value="ca">Canada</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="au">Australia</option>
+                                <option value="de">Germany</option>
+                                <option value="fr">France</option>
+                                <option value="in">India</option>
+                                <option value="jp">Japan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-input" id="city" value="New York" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Time Zone</label>
+                            <select class="form-input form-select" id="timezone" disabled>
+                                <option value="EST" selected>Eastern Time (EST)</option>
+                                <option value="CST">Central Time (CST)</option>
+                                <option value="MST">Mountain Time (MST)</option>
+                                <option value="PST">Pacific Time (PST)</option>
+                                <option value="GMT">Greenwich Mean Time (GMT)</option>
+                                <option value="CET">Central European Time (CET)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">LinkedIn Profile</label>
+                            <input type="url" class="form-input" id="linkedin" value="https://linkedin.com/in/johndoe" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>💼</span>
+                        Professional Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Current Job Title</label>
+                            <input type="text" class="form-input" id="jobTitle" value="Software Developer" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Company</label>
+                            <input type="text" class="form-input" id="company" value="Tech Solutions Inc." disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Experience Level</label>
+                            <select class="form-input form-select" id="experience" disabled>
+                                <option value="beginner">Beginner (0-1 years)</option>
+                                <option value="intermediate" selected>Intermediate (2-5 years)</option>
+                                <option value="advanced">Advanced (5+ years)</option>
+                                <option value="expert">Expert (10+ years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Learning Goals</label>
+                            <textarea class="form-input form-textarea" id="learningGoals" disabled>I want to become a full-stack developer and learn modern web technologies like React, Node.js, and cloud deployment. My goal is to build scalable web applications and advance my career in tech.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons" id="actionButtons" style="display: none;">
+                    <button class="btn btn-secondary" onclick="cancelEdit()">
+                        <span>❌</span>
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" onclick="saveProfile()">
+                        <span>💾</span>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div id="securitySection" class="content-section" style="display: none;">
+                <div class="content-header">
+                    <h1 class="content-title">Security Settings</h1>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>🔐</span>
+                        Password & Authentication
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-input" id="currentPassword" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-input" id="newPassword" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm new password">
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="changePassword()">
+                            <span>🔄</span>
+                            Change Password
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>🛡️</span>
+                        Two-Factor Authentication
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="twoFactorAuth" style="margin-right: 0.5rem;">
+                            Enable Two-Factor Authentication
+                        </label>
+                        <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; margin-top: 0.5rem;">
+                            Add an extra layer of security to your account by requiring a verification code from your phone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences Section -->
+            <div id="preferencesSection" class="content-section" style="display: none;">
+                <div class="content-header">
+                    <h1 class="content-title">Preferences</h1>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>🎨</span>
+                        Appearance
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Theme</label>
+                            <select class="form-input form-select" id="theme">
+                                <option value="dark" selected>Dark Mode</option>
+                                <option value="light">Light Mode</option>
+                                <option value="auto">Auto (System)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Language</label>
+                            <select class="form-input form-select" id="language">
+                                <option value="en" selected>English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="zh">Chinese</option>
+                                <option value="ja">Japanese</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>🔔</span>
+                        Notifications
+                    </h2>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="emailNotifications" checked style="margin-right: 0.5rem;">
+                            Email Notifications
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="pushNotifications" checked style="margin-right: 0.5rem;">
+                            Push Notifications
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="courseReminders" checked style="margin-right: 0.5rem;">
+                            Course Reminders
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="savePreferences()">
+                        <span>💾</span>
+                        Save Preferences
+                    </button>
+                </div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div id="achievementsSection" class="content-section" style="display: none;">
+                <div class="content-header">
+                    <h1 class="content-title">Achievements</h1>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>🏆</span>
+                        Your Achievements
+                    </h2>
+                    <div class="achievements-grid">
+                        <div class="achievement-card">
+                            <span class="achievement-icon">🚀</span>
+                            <div class="achievement-title">First Course</div>
+                            <div class="achievement-description">Completed your first course</div>
+                        </div>
+                        <div class="achievement-card">
+                            <span class="achievement-icon">🔥</span>
+                            <div class="achievement-title">Streak Master</div>
+                            <div class="achievement-description">10-day learning streak</div>
+                        </div>
+                        <div class="achievement-card">
+                            <span class="achievement-icon">🎯</span>
+                            <div class="achievement-title">Quiz Champion</div>
+                            <div class="achievement-description">Perfect score on 5 quizzes</div>
+                        </div>
+                        <div class="achievement-card">
+                            <span class="achievement-icon">📚</span>
+                            <div class="achievement-title">Bookworm</div>
+                            <div class="achievement-description">Completed 10 courses</div>
+                        </div>
+                        <div class="achievement-card locked">
+                            <span class="achievement-icon">💎</span>
+                            <div class="achievement-title">Expert Level</div>
+                            <div class="achievement-description">Complete 25 courses</div>
+                        </div>
+                        <div class="achievement-card locked">
+                            <span class="achievement-icon">👑</span>
+                            <div class="achievement-title">Top Performer</div>
+                            <div class="achievement-description">Rank in top 10%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div id="billingSection" class="content-section" style="display: none;">
+                <div class="content-header">
+                    <h1 class="content-title">Billing & Subscription</h1>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span>💳</span>
+                        Current Plan
+                    </h2>
+                    <div style="background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="color: #00d4ff; font-size: 1.5rem; margin-bottom: 1rem;">Premium Plan</h3>
+                        <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">
+                            Access to all courses, certificates, and premium features
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span style="font-size: 2rem; font-weight: 700; color: #00d4ff;">$29</span>
+                                <span style="color: rgba(255, 255, 255, 0.6);">/month</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: rgba(255, 255, 255, 0.8);">Next billing: Jan 15, 2024</div>
+                                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem;">Auto-renewal enabled</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" onclick="manageBilling()">
+                            <span>⚙️</span>
+                            Manage Billing
+                        </button>
+                        <button class="btn btn-primary" onclick="upgradePlan()">
+                            <span>⬆️</span>
+                            Upgrade Plan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🚪 Confirm Logout</h2>
+            <p class="modal-text">
+                Are you sure you want to logout? You'll need to sign in again to access your courses and progress.
+            </p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="hideLogoutModal()">
+                    <span>❌</span>
+                    Cancel
+                </button>
+                <button class="btn btn-primary" onclick="confirmLogout()">
+                    <span>🚪</span>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notificationIcon">✅</span>
+        <span id="notificationText">Profile updated successfully!</span>
+    </div>
+
+    <script>
+        // Global State
+        let isEditing = false;
+        let originalData = {};
+
+        // Initialize Profile Page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProfile();
+        });
+
+        function initializeProfile() {
+            loadUserData();
+            console.log('🎓 EduTech Pro Profile Page Loaded!');
+        }
+
+        function loadUserData() {
+            // Load user data from localStorage or use defaults
+            const userData = JSON.parse(localStorage.getItem('edutech_user_data')) || {
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john.doe@example.com',
+                phone: '+1 (555) 123-4567',
+                dateOfBirth: '1995-06-15',
+                gender: 'male',
+                country: 'us',
+                city: 'New York',
+                timezone: 'EST',
+                linkedin: 'https://linkedin.com/in/johndoe',
+                jobTitle: 'Software Developer',
+                company: 'Tech Solutions Inc.',
+                experience: 'intermediate',
+                learningGoals: 'I want to become a full-stack developer and learn modern web technologies like React, Node.js, and cloud deployment. My goal is to build scalable web applications and advance my career in tech.'
+            };
+
+            // Update form fields
+            Object.keys(userData).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = userData[key];
+                }
+            });
+
+            // Update profile display
+            updateProfileDisplay(userData);
+        }
+
+        function updateProfileDisplay(userData) {
+            const fullName = `${userData.firstName} ${userData.lastName}`;
+            const initials = `${userData.firstName[0]}${userData.lastName[0]}`.toUpperCase();
+
+            document.getElementById('profileName').textContent = fullName;
+            document.getElementById('profileAvatar').textContent = initials;
+        }
+
+        // Navigation Functions
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Remove active class from all menu links
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName + 'Section').style.display = 'block';
+
+            // Add active class to clicked menu link
+            event.target.classList.add('active');
+
+            console.log(`Switched to ${sectionName} section`);
+        }
+
+        // Edit Profile Functions
+        function toggleEdit() {
+            if (isEditing) {
+                cancelEdit();
+            } else {
+                startEdit();
+            }
+        }
+
+        function startEdit() {
+            isEditing = true;
+
+            // Store original data
+            originalData = {};
+            const formInputs = document.querySelectorAll('#personalSection .form-input');
+            formInputs.forEach(input => {
+                originalData[input.id] = input.value;
+                input.disabled = false;
+            });
+
+            // Update UI
+            document.getElementById('editBtn').innerHTML = '<span>❌</span> Cancel Edit';
+            document.getElementById('actionButtons').style.display = 'flex';
+
+            showNotification('✏️ Edit mode enabled', 'info');
+        }
+
+        function cancelEdit() {
+            isEditing = false;
+
+            // Restore original data
+            Object.keys(originalData).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = originalData[key];
+                    element.disabled = true;
+                }
+            });
+
+            // Update UI
+            document.getElementById('editBtn').innerHTML = '<span>✏️</span> Edit Profile';
+            document.getElementById('actionButtons').style.display = 'none';
+
+            showNotification('❌ Edit cancelled', 'info');
+        }
+
+        function saveProfile() {
+            // Collect form data
+            const userData = {};
+            const formInputs = document.querySelectorAll('#personalSection .form-input');
+            formInputs.forEach(input => {
+                userData[input.id] = input.value;
+                input.disabled = true;
+            });
+
+            // Save to localStorage
+            localStorage.setItem('edutech_user_data', JSON.stringify(userData));
+
+            // Update profile display
+            updateProfileDisplay(userData);
+
+            // Update UI
+            isEditing = false;
+            document.getElementById('editBtn').innerHTML = '<span>✏️</span> Edit Profile';
+            document.getElementById('actionButtons').style.display = 'none';
+
+            showNotification('✅ Profile updated successfully!', 'success');
+
+            console.log('Profile saved:', userData);
+        }
+
+        // Security Functions
+        function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showNotification('❌ Please fill in all password fields', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showNotification('❌ New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showNotification('❌ Password must be at least 8 characters', 'error');
+                return;
+            }
+
+            // Simulate password change
+            setTimeout(() => {
+                // Clear form
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+
+                showNotification('✅ Password changed successfully!', 'success');
+            }, 1000);
+        }
+
+        // Preferences Functions
+        function savePreferences() {
+            const preferences = {
+                theme: document.getElementById('theme').value,
+                language: document.getElementById('language').value,
+                emailNotifications: document.getElementById('emailNotifications').checked,
+                pushNotifications: document.getElementById('pushNotifications').checked,
+                courseReminders: document.getElementById('courseReminders').checked
+            };
+
+            localStorage.setItem('edutech_preferences', JSON.stringify(preferences));
+            showNotification('✅ Preferences saved successfully!', 'success');
+
+            console.log('Preferences saved:', preferences);
+        }
+
+        // Billing Functions
+        function manageBilling() {
+            showNotification('🔄 Redirecting to billing portal...', 'info');
+            setTimeout(() => {
+                alert('🏦 Billing Portal\n\nThis would redirect to a secure billing management portal where you can:\n\n• Update payment methods\n• View billing history\n• Download invoices\n• Manage subscriptions');
+            }, 1000);
+        }
+
+        function upgradePlan() {
+            showNotification('⬆️ Loading upgrade options...', 'info');
+            setTimeout(() => {
+                alert('🚀 Upgrade Your Plan\n\nAvailable upgrades:\n\n• Premium Pro ($49/month)\n  - Priority support\n  - Advanced analytics\n  - Custom learning paths\n\n• Enterprise ($99/month)\n  - Team management\n  - Custom branding\n  - API access');
+            }, 1000);
+        }
+
+        // Avatar Functions
+        function changeAvatar() {
+            const colors = [
+                'linear-gradient(135deg, #00d4ff, #7c3aed)',
+                'linear-gradient(135deg, #10b981, #059669)',
+                'linear-gradient(135deg, #f59e0b, #d97706)',
+                'linear-gradient(135deg, #ef4444, #dc2626)',
+                'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                'linear-gradient(135deg, #06b6d4, #0891b2)'
+            ];
+
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.getElementById('profileAvatar').style.background = randomColor;
+
+            showNotification('🎨 Avatar color updated!', 'success');
+        }
+
+        // Logout Functions
+        function showLogoutModal() {
+            document.getElementById('logoutModal').classList.add('show');
+        }
+
+        function hideLogoutModal() {
+            document.getElementById('logoutModal').classList.remove('show');
+        }
+
+        function confirmLogout() {
+            showNotification('🚪 Logging out...', 'info');
+
+            setTimeout(() => {
+                // Clear user session data
+                localStorage.removeItem('edutech_current_user');
+                localStorage.removeItem('edutech_auth_token');
+
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notificationIcon');
+            const text = document.getElementById('notificationText');
+
+            // Set icon based on type
+            const icons = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️',
+                warning: '⚠️'
+            };
+
+            icon.textContent = icons[type] || icons.success;
+            text.textContent = message;
+
+            // Apply styling based on type
+            notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+
+            // Show notification
+            notification.classList.add('show');
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Load preferences on page load
+        function loadPreferences() {
+            const preferences = JSON.parse(localStorage.getItem('edutech_preferences'));
+            if (preferences) {
+                document.getElementById('theme').value = preferences.theme || 'dark';
+                document.getElementById('language').value = preferences.language || 'en';
+                document.getElementById('emailNotifications').checked = preferences.emailNotifications !== false;
+                document.getElementById('pushNotifications').checked = preferences.pushNotifications !== false;
+                document.getElementById('courseReminders').checked = preferences.courseReminders !== false;
+            }
+        }
+
+        // Initialize preferences
+        setTimeout(loadPreferences, 100);
+
+        console.log('🎓 EduTech Pro Profile System Initialized!');
+        console.log('✨ Features: Profile Management, Security, Preferences, Achievements, Billing');
+    </script>
+</body>
+</html>
