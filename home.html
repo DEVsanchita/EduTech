@@ -17,10 +17,10 @@
                 </div>
                 <div class="user-info">
                     <div class="user-details">
-                        <h3 id="userName">Demo User</h3>
-                        <p>Premium Learner</p>
+                        <h3 id="userName"><a href="profile.html" style="text-decoration: none;" target="_blank">Demo User</a></h3>
+                        <p><a href="profile.html" style="text-decoration: none;" target="_blank">Premium Learner</a></p>
                     </div>
-                    <div class="user-avatar" id="userAvatar">DU</div>
+                    <div class="user-avatar" id="userAvatar"><a href="profile.html" style="text-decoration: none;" target="_blank">DU</a></div>
                 </div>
             </div>
         </header>
@@ -31,8 +31,8 @@
             <p>Ready to continue your amazing learning journey? You're making incredible progress!</p>
 
             <div class="quick-actions">
-                <button class="btn btn-primary" onclick="continueLearning()">
-                    ▶️ Continue Learning
+                <button class="btn btn-primary" onclick="continueLearning()"><a href="fullstack.html" style="text-decoration: none;" target="_blank">▶️ Continue Learning</a>
+                    
                 </button>
                 <button class="btn btn-secondary" onclick="browseCourses()">
                     🔍 Browse Courses
@@ -70,15 +70,17 @@
                         <a href="#" class="card-link" onclick="viewAllCourses()">View All</a>
                     </div>
 
-                    <div class="course-item" onclick="openCourse('fullstack')">
+                    <div class="course-item" onclick="openCourse('fullstack')" >
+                        
                         <div class="course-icon">💻</div>
                         <div class="course-info">
-                            <div class="course-title">Full Stack Web Development</div>
+                            <div class="course-title"><a href="fullstack.html" style="text-decoration: none; color: black;" target="_blank">Full Stack Web Development</a></div>
                             <div class="course-instructor">by Sarah Johnson</div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 75%"></div>
                             </div>
                             <div class="progress-text">Lesson 15 of 20 • 75% Complete</div>
+                        
                         </div>
                     </div>
 
@@ -94,17 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="course-item" onclick="openCourse('python')">
-                        <div class="course-icon">🐍</div>
-                        <div class="course-info">
-                            <div class="course-title">Python for Data Science</div>
-                            <div class="course-instructor">by Dr. Maria Rodriguez</div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 90%"></div>
-                            </div>
-                            <div class="progress-text">Lesson 18 of 20 • 90% Complete</div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <!-- Recommended Courses -->
@@ -438,3 +430,4 @@
     </script>
 </body>
 </html>
+
